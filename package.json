@@ -1,5 +1,12 @@
 {
+  "name": "missao-bebe",
+  "version": "1.0.0",
+  "description": "Jogo para o Chá Revelação do Bebê",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
   "dependencies": {
-    "firebase": "^12.12.1"
+    "express": "^4.18.2"
   }
 }
