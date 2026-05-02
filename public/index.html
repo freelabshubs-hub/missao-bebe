@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Missão Bebê - Chá Revelação</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700&family=Dancing+Script:wght@500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Audio Elements -->
+    <audio id="bgMusic" loop>
+        <!-- Background Music -->
+        <source src="Music.ogg" type="audio/ogg">
+        <source src="Music.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="clickSound" preload="auto">
+        <source src="assets/click.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="typeSound" preload="auto">
+        <source src="assets/type.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="cheerSound" preload="auto">
+        <source src="assets/cheer.mp3" type="audio/mpeg">
+    </audio>
+
+    <div id="app">
+        <!-- Screen -1: Pre-load Screen (Black with GIF) -->
+        <div id="preload-screen" class="screen active" style="background-color: black;">
+            <div class="preload-content" onclick="enterGame()">
+                <img src="assets/original-6379e3d50becf5876290c427abc9257f.gif" alt="Cegonha" class="preload-gif">
+                <div class="typewriter-container">
+                    <p id="typewriter-text"></p>
+                </div>
+                <p class="preload-text" id="tapToStartText">Toque para começar...</p>
+            </div>
+        </div>
+
+        <!-- Screen 1: Start Screen (Matches Image 1) -->
+        <div id="start-screen" class="screen" style="background-image: url('assets/start.png'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+            <div class="overlay">
+                <div class="start-gif-container" onclick="openStorkModal()">
+                    <img src="assets/original-6379e3d50becf5876290c427abc9257f.gif" alt="Cegonha voando" class="start-gif">
+                </div>
+                <!-- We place buttons at the bottom since the image has the title at the top -->
+                <div class="start-buttons">
+                    <button class="btn btn-large btn-start" onclick="playType(); askName()">▶ COMEÇAR</button>
+                    <button class="btn btn-large btn-ranking" onclick="playType(); showRanking()">🏆 RANKING</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen 0: Name Input -->
+        <div id="name-screen" class="screen" style="background-image: url('assets/Screenname.png'); background-size: cover; background-position: center;">
+            <div class="overlay center-overlay">
+                <div class="card name-card">
+                    <h1>Missão Bebê</h1>
+                    <p>Bem-vindo ao nosso Chá Revelação!</p>
+                    <div class="input-group">
+                        <label for="playerName">Digite seu nome:</label>
+                        <input type="text" id="playerName" placeholder="Seu nome aqui..." autocomplete="off">
+                    </div>
+                    <button class="btn btn-primary" onclick="playType(); startGame()">Entrar na Missão</button>
+                    <button class="btn btn-secondary" onclick="playType(); backToStart()">Voltar</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen 2: Question Screen -->
+        <div id="question-screen" class="screen">
+            <div class="question-container card relative-card">
+                <button class="btn-exit" onclick="playType(); openExitModal()">Sair</button>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="question-header">
+                    <span class="question-number" id="qNumber">1</span>
+                    <h2 id="qText">Terei um pezinho ou um pezão?</h2>
+                </div>
+                <div class="options-container" id="optionsContainer">
+                    <!-- Options will be injected here via JS -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen 3: Result Screen -->
+        <div id="result-screen" class="screen">
+            <div class="card result-card" id="resultCard">
+                <h2>O seu palpite é...</h2>
+                <div class="result-display" id="resultDisplay">
+                    <!-- Result image/text injected here -->
+                </div>
+                <p id="resultMessage"></p>
+                <div class="result-buttons">
+                    <button class="btn btn-primary" onclick="playType(); showRanking()">Ver Ranking</button>
+                    <button class="btn btn-secondary" onclick="playType(); resetGame()">Jogar Novamente</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen 4: Ranking Screen -->
+        <div id="ranking-screen" class="screen">
+            <div class="card ranking-card">
+                <h2>🏆 Ranking de Palpites</h2>
+                <div class="ranking-stats">
+                    <div class="stat-box stella">
+                        <h3>Stella</h3>
+                        <p id="stellaCount">0</p>
+                    </div>
+                    <div class="stat-box oliver">
+                        <h3>Oliver</h3>
+                        <p id="oliverCount">0</p>
+                    </div>
+                </div>
+                <div class="ranking-list-container">
+                    <ul id="rankingList">
+                        <!-- Ranking items injected here -->
+                    </ul>
+                </div>
+                <button class="btn btn-secondary" onclick="playType(); backToStart()">Voltar ao Início</button>
+            </div>
+        </div>
+
+        <!-- Modal de Respostas Detalhadas -->
+        <div id="details-modal" class="modal">
+            <div class="modal-content card">
+                <span class="close-btn" onclick="closeDetailsModal()">&times;</span>
+                <h2 id="modalPlayerName">Respostas</h2>
+                <div class="details-list" id="modalDetailsList">
+                    <!-- Respostas detalhadas injetadas aqui -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal da Cegonha (Em Breve ou Revelação) -->
+        <div id="stork-modal" class="modal">
+            <div class="modal-content card" style="text-align: center;">
+                <span class="close-btn" onclick="closeStorkModal()">&times;</span>
+                
+                <!-- O conteúdo padrão (Em Breve) -->
+                <div id="stork-content-soon">
+                    <h2 style="color: #ffb6c1;">Atenção!</h2>
+                    <img src="assets/original-6379e3d50becf5876290c427abc9257f.gif" alt="Cegonha" style="width: 150px; height: 150px; border-radius: 50%; margin: 15px 0;">
+                    <p style="font-size: 18px; color: #555; font-weight: bold;">Em breve a cegonha vai dizer o sexo do bebê!</p>
+                    <p style="font-size: 16px; color: #777; margin-top: 10px;">Retorne mais tarde.</p>
+                </div>
+
+                <!-- O conteúdo de Revelação (Escondido por padrão) -->
+                <div id="stork-content-reveal" style="display: none;">
+                    <h2 style="color: #ff9a9e; font-size: 32px;" id="reveal-title">É UMA MENINA!</h2>
+                    <img id="reveal-img" src="" alt="Bebê Revelado" style="width: 200px; height: 200px; object-fit: contain; margin: 15px 0; animation: bounce 2s infinite;">
+                    <p style="font-size: 20px; color: #555; font-weight: bold;" id="reveal-desc">A cegonha trouxe a Stella!</p>
+                </div>
+
+                <button class="btn btn-secondary" style="margin-top: 20px;" onclick="closeStorkModal()">Fechar</button>
+            </div>
+        </div>
+
+        <!-- Modal de Saída (Exit Modal) -->
+        <div id="exit-modal" class="modal">
+            <div class="modal-content card" style="text-align: center;">
+                <h2 style="color: #ff9a9e; margin-bottom: 15px;">Tem certeza?</h2>
+                <p style="font-size: 16px; color: #555; font-weight: bold;">Se você sair agora, o seu progresso não será salvo.</p>
+                <div style="display: flex; gap: 15px; margin-top: 25px;">
+                    <button class="btn btn-secondary" style="flex: 1; margin-top: 0;" onclick="playType(); closeExitModal()">Cancelar</button>
+                    <button class="btn btn-primary" style="flex: 1;" onclick="playType(); confirmExit()">Confirmar</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Firebase SDK (Carregado via CDN para facilitar no frontend estático) -->
+    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore-compat.js"></script>
+    
+    <script src="script.js"></script>
+</body>
+</html>
