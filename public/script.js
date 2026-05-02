@@ -104,6 +104,12 @@ document.addEventListener('DOMContentLoaded', () => {
         nameInput.addEventListener('input', playType);
     }
 
+    // Configura o evento de tela cheia para mudar o ícone do botão
+    document.addEventListener('fullscreenchange', updateFullscreenButton);
+    document.addEventListener('webkitfullscreenchange', updateFullscreenButton);
+    document.addEventListener('mozfullscreenchange', updateFullscreenButton);
+    document.addEventListener('MSFullscreenChange', updateFullscreenButton);
+
     // Efeito Typewriter na tela preta
     const textToType = "Criado por Gabriela e Fabricio com muito amor e carinho ao nosso bebê que está a caminho";
     const typeElement = document.getElementById('typewriter-text');
@@ -427,3 +433,47 @@ function resetGame() {
 function backToStart() {
     showScreen('start-screen');
 }
+
+// --- FUNÇÕES DE TELA CHEIA (FULLSCREEN) ---
+function toggleFullScreen() {
+    playType(); // Somzinho de clique
+    
+    if (!document.fullscreenElement &&    // alternativa padrão
+        !document.mozFullScreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement ) {  // alternativas de navegadores antigos
+        
+        // Entra em tela cheia
+        const elem = document.documentElement;
+        if (elem.requestFullscreen) {
+            elem.requestFullscreen();
+        } else if (elem.msRequestFullscreen) {
+            elem.msRequestFullscreen();
+        } else if (elem.mozRequestFullScreen) {
+            elem.mozRequestFullScreen();
+        } else if (elem.webkitRequestFullscreen) {
+            elem.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
+        }
+    } else {
+        // Sai da tela cheia
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.msExitFullscreen) {
+            document.msExitFullscreen();
+        } else if (document.mozCancelFullScreen) {
+            document.mozCancelFullScreen();
+        } else if (document.webkitExitFullscreen) {
+            document.webkitExitFullscreen();
+        }
+    }
+}
+
+function updateFullscreenButton() {
+    const btn = document.getElementById('fullscreen-btn');
+    if (!document.fullscreenElement && !document.webkitIsFullScreen && !document.mozFullScreen && !document.msFullscreenElement) {
+        btn.innerHTML = "⛶"; // Ícone de expandir
+        btn.title = "Tela Cheia";
+    } else {
+        btn.innerHTML = "✖"; // Ícone de fechar (X)
+        btn.title = "Sair da Tela Cheia";
+    }
+}
+// ------------------------------------------

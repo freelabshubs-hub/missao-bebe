@@ -2,13 +2,20 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <!-- Meta tags para fazer o navegador mobile tratar como WebApp (Tela cheia) -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>Missão Bebê - Chá Revelação</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700&family=Dancing+Script:wght@500;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Audio Elements -->
+    <!-- Botão flutuante de Tela Cheia -->
+    <button id="fullscreen-btn" onclick="toggleFullScreen()" title="Tela Cheia">⛶</button>
+
+    <div id="app"><!-- Audio Elements -->
     <audio id="bgMusic" loop>
         <!-- Background Music -->
         <source src="Music.ogg" type="audio/ogg">
