@@ -12,7 +12,7 @@ const DATA_FILE = path.join(__dirname, 'data.json');
 // Quando descobrir o sexo, mude IS_REVEALED para true
 // e altere REVEALED_BABY para 'Stella' ou 'Oliver'
 const IS_REVEALED = false; 
-const REVEALED_BABY = 'Stella'; // ou 'Oliver'
+const REVEALED_BABY = 'Oliver'; // ou 'Stella'
 // ------------------------------
 
 app.use(cors());
