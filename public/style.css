@@ -625,3 +625,89 @@ h1, h2, h3 {
     .start-buttons { gap: 10px; }
     .btn-large { padding: 10px 20px; font-size: 18px; }
 }
+
+@media (max-width: 480px) {
+    .card {
+        padding: 20px 15px;
+        width: 95%;
+    }
+    
+    #typewriter-text {
+        font-size: 20px; /* Diminui fonte manuscrita no celular */
+    }
+
+    .start-gif {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .question-header h2 {
+        font-size: 16px;
+    }
+    
+    .question-number {
+        width: 35px;
+        height: 35px;
+        font-size: 18px;
+        margin-right: 10px;
+    }
+
+    .option-card {
+        padding: 10px 5px;
+    }
+
+    .option-img img {
+        width: 70px;
+        height: 70px;
+    }
+
+    .options-container,
+    .options-container.grid-options {
+        gap: 10px;
+    }
+
+    .btn {
+        font-size: 15px;
+        padding: 10px 15px;
+    }
+
+    .btn-large {
+        font-size: 18px;
+    }
+    
+    .result-card h2 {
+        font-size: 22px;
+    }
+    
+    .result-title {
+        font-size: 28px;
+    }
+    
+    .result-img img {
+        max-width: 180px;
+    }
+    
+    .stat-box h3 {
+        font-size: 14px;
+    }
+    
+    .stat-box p {
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 360px) {
+    /* Para celulares muito pequenos (iPhone SE, etc) */
+    .option-img img {
+        width: 50px;
+        height: 50px;
+    }
+    .option-text {
+        font-size: 13px;
+    }
+    .btn-exit {
+        font-size: 14px;
+        top: 10px;
+        right: 10px;
+    }
+}
