@@ -381,12 +381,12 @@ async function openStorkModal() {
                 revealTitle.innerText = "É UMA MENINA!";
                 revealTitle.style.color = "#ff9a9e"; // Rosa
                 revealImg.src = "assets/A Stella.png";
-                revealDesc.innerText = "A cegonha trouxe a Stella!";
+                revealDesc.innerText = "A cegonha está revelando a Stella!";
             } else {
                 revealTitle.innerText = "É UM MENINO!";
                 revealTitle.style.color = "#a1c4fd"; // Azul
                 revealImg.src = "assets/O Oliver.png";
-                revealDesc.innerText = "A cegonha trouxe o Oliver!";
+                revealDesc.innerText = "A cegonha está revelando o Oliver!";
             }
         } else {
             // Se ainda não foi revelado, toca o som normal e mostra "Em Breve"
